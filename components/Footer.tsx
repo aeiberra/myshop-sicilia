@@ -48,12 +48,13 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">{t('common.category')}</h3>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <span className="text-secondary-300">{t('categories.Tecnología')}</span>
-              <span className="text-secondary-300">{t('categories.Electrodomésticos')}</span>
-              <span className="text-secondary-300">{t('categories.Muebles')}</span>
-              <span className="text-secondary-300">{t('categories.Bazar')}</span>
-              <span className="text-secondary-300">{t('categories.Oficina')}</span>
-              <span className="text-secondary-300">{t('categories.Herramientas')}</span>
+              <span className="text-secondary-300">{t('categories.Tecnologia 🖥️')}</span>
+              <span className="text-secondary-300">{t('categories.Elettrodomestici 🫕')}</span>
+              <span className="text-secondary-300">{t('categories.Mobili 🪑')}</span>
+              <span className="text-secondary-300">{t('categories.Bazar 🍽️')}</span>
+              <span className="text-secondary-300">{t('categories.Ufficio 🖨️')}</span>
+              <span className="text-secondary-300">{t('categories.Strumenti 🛠')}</span>
+              <span className="text-secondary-300">{t('categories.Vari 🎁')}</span>
             </div>
           </div>
         </div>
