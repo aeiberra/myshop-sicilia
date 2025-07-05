@@ -33,26 +33,32 @@ export function saveCart(cart: Cart): void {
   }
 }
 
-// Calcular totales del carrito
+// Calcular totales del carrito (sin cantidad)
 export function calculateCartTotals(items: CartItem[]): { total: number; itemCount: number } {
-  const total = items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  const total = items.reduce((sum, item) => sum + item.product.price, 0);
+  const itemCount = items.length; // Cada producto cuenta como 1
   
   return { total, itemCount };
 }
 
-// Agregar producto al carrito
-export function addToCart(product: Product, quantity: number = 1): Cart {
+// Verificar si un producto ya está en el carrito
+export function isProductInCart(productId: string): boolean {
   const cart = getCart();
-  const existingItemIndex = cart.items.findIndex(item => item.product.id === product.id);
+  return cart.items.some(item => item.product.id === productId);
+}
 
-  if (existingItemIndex >= 0) {
-    // Si el producto ya existe, actualizar cantidad
-    cart.items[existingItemIndex].quantity += quantity;
-  } else {
-    // Si el producto no existe, agregarlo
-    cart.items.push({ product, quantity });
+// Agregar producto al carrito (solo si no existe ya)
+export function addToCart(product: Product): Cart | null {
+  const cart = getCart();
+  const existingItem = cart.items.find(item => item.product.id === product.id);
+
+  // Si el producto ya existe, no hacer nada
+  if (existingItem) {
+    return null; // Producto ya está en el carrito
   }
+
+  // Agregar el producto sin cantidad
+  cart.items.push({ product });
 
   // Recalcular totales
   const { total, itemCount } = calculateCartTotals(cart.items);
@@ -77,30 +83,6 @@ export function removeFromCart(productId: string): Cart {
   return cart;
 }
 
-// Actualizar cantidad de un producto
-export function updateCartItemQuantity(productId: string, quantity: number): Cart {
-  const cart = getCart();
-  const itemIndex = cart.items.findIndex(item => item.product.id === productId);
-
-  if (itemIndex >= 0) {
-    if (quantity <= 0) {
-      // Si cantidad es 0 o negativa, remover el producto
-      cart.items.splice(itemIndex, 1);
-    } else {
-      // Actualizar cantidad
-      cart.items[itemIndex].quantity = quantity;
-    }
-  }
-
-  // Recalcular totales
-  const { total, itemCount } = calculateCartTotals(cart.items);
-  cart.total = total;
-  cart.itemCount = itemCount;
-
-  saveCart(cart);
-  return cart;
-}
-
 // Vaciar carrito
 export function clearCart(): Cart {
   const emptyCart: Cart = { items: [], total: 0, itemCount: 0 };
@@ -108,10 +90,10 @@ export function clearCart(): Cart {
   return emptyCart;
 }
 
-// Generar mensaje de WhatsApp
+// Generar mensaje de WhatsApp (sin cantidad)
 export function generateWhatsAppMessage(cart: Cart, whatsappMessage: string): string {
   const items = cart.items.map(item => 
-    `• ${item.product.name} - €${item.product.price} x${item.quantity} = €${(item.product.price * item.quantity).toFixed(2)}`
+    `• ${item.product.name} - €${item.product.price.toFixed(2)}`
   ).join('\n');
 
   const message = `${whatsappMessage}\n\n${items}\n\n*Total: €${cart.total.toFixed(2)}*`;
@@ -131,10 +113,10 @@ export function useCart() {
 
   return {
     cart,
-    addToCart: (product: Product, quantity?: number) => addToCart(product, quantity),
+    addToCart: (product: Product) => addToCart(product),
     removeFromCart: (productId: string) => removeFromCart(productId),
-    updateQuantity: (productId: string, quantity: number) => updateCartItemQuantity(productId, quantity),
     clearCart: () => clearCart(),
+    isProductInCart: (productId: string) => isProductInCart(productId),
     generateWhatsAppUrl: (phoneNumber: string, message: string) => generateWhatsAppUrl(cart, phoneNumber, message),
   };
 } 

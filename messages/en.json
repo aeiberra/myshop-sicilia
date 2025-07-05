@@ -42,6 +42,7 @@
     "to": "To",
     "addToCart": "Add to cart",
     "outOfStock": "Out of stock",
+    "inCart": "In cart",
     "productCount": "products found"
   },
   "cart": {
@@ -55,8 +56,9 @@
     "quantity": "Quantity",
     "remove": "Remove",
     "clear": "Clear cart",
+    "removeItem": "Remove item",
     "checkout": "Send Order",
-    "whatsappMessage": "Hello! I'm interested in buying these products:",
+    "whatsappMessage": "Hello! I'm interested in these products:",
     "continueShopping": "Continue shopping",
     "updateQuantity": "Update quantity"
   },

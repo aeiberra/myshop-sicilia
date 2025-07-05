@@ -21,7 +21,6 @@ export interface ProductFilters {
 
 export interface CartItem {
   product: Product;
-  quantity: number;
 }
 
 export interface Cart {

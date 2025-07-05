@@ -24,7 +24,7 @@ export default function HomePage() {
           
           {/* Carrito lateral */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8">
+            <div className="sticky top-24">
               <Cart />
             </div>
           </div>

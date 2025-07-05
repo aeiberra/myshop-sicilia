@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { ShoppingCart, Plus, Minus, Trash2, Send, X } from 'lucide-react';
+import { ShoppingCart, Trash2, Send, X } from 'lucide-react';
 import { Cart as CartType, CartItem } from '@/types/product';
-import { getCart, updateCartItemQuantity, removeFromCart, clearCart, generateWhatsAppUrl } from '@/lib/cart';
+import { getCart, removeFromCart, clearCart, generateWhatsAppUrl } from '@/lib/cart';
 
 const WHATSAPP_NUMBER = '393481860784';
 
@@ -14,8 +15,10 @@ export default function Cart() {
   const [cart, setCart] = useState<CartType>({ items: [], total: 0, itemCount: 0 });
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Cargar carrito inicial
     loadCart();
 
@@ -36,12 +39,6 @@ export default function Cart() {
   const loadCart = () => {
     const currentCart = getCart();
     setCart(currentCart);
-  };
-
-  const handleUpdateQuantity = (productId: string, newQuantity: number) => {
-    const updatedCart = updateCartItemQuantity(productId, newQuantity);
-    setCart(updatedCart);
-    window.dispatchEvent(new Event('cart-updated'));
   };
 
   const handleRemoveItem = (productId: string) => {
@@ -107,31 +104,100 @@ export default function Cart() {
         </p>
       </div>
 
-      {/* Controles */}
-      <div className="flex-shrink-0 space-y-2">
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => handleUpdateQuantity(item.product.id, item.quantity - 1)}
-            className="p-1 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <Minus className="w-4 h-4" />
-          </button>
-          <span className="text-sm font-medium w-8 text-center">
-            {item.quantity}
-          </span>
-          <button
-            onClick={() => handleUpdateQuantity(item.product.id, item.quantity + 1)}
-            className="p-1 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-          </button>
-        </div>
+      {/* Botón eliminar */}
+      <div className="flex-shrink-0">
         <button
           onClick={() => handleRemoveItem(item.product.id)}
-          className="w-full p-1 text-red-500 hover:text-red-700 transition-colors"
+          className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+          title={t('cart.removeItem')}
         >
-          <Trash2 className="w-4 h-4 mx-auto" />
+          <Trash2 className="w-4 h-4" />
         </button>
+      </div>
+    </div>
+  );
+
+  const MobileCartModal = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" style={{ zIndex: 999999 }}>
+      <div className="bg-white rounded-lg w-full max-w-md max-h-[90vh] flex flex-col shadow-2xl">
+        {/* Header del carrito */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white rounded-t-lg">
+          <h2 className="text-lg font-semibold text-secondary-900">
+            {t('cart.title')}
+          </h2>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Contenido del carrito */}
+        <div className="flex-1 overflow-y-auto">
+          {cart.items.length === 0 ? (
+            <div className="text-center py-8 px-4">
+              <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-secondary-600 font-medium">
+                {t('cart.empty')}
+              </p>
+              <p className="text-sm text-secondary-500 mt-2">
+                {t('cart.emptyDescription')}
+              </p>
+            </div>
+          ) : (
+            <div className="divide-y divide-gray-100">
+              {cart.items.map((item) => (
+                <CartItem key={item.product.id} item={item} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        {cart.items.length > 0 && (
+          <div className="p-4 border-t border-gray-200 space-y-4 bg-white rounded-b-lg">
+            {/* Total */}
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-semibold text-secondary-900">
+                {t('cart.total')}
+              </span>
+              <span className="text-xl font-bold text-primary-600">
+                €{cart.total.toFixed(2)}
+              </span>
+            </div>
+
+            {/* Resumen */}
+            <div className="text-sm text-secondary-600">
+              {cart.itemCount} {cart.itemCount === 1 ? t('cart.item') : t('cart.items')}
+            </div>
+
+            {/* Botones */}
+            <div className="space-y-3">
+              <button
+                onClick={handleCheckout}
+                disabled={isLoading}
+                className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              >
+                {isLoading ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    <span>{t('cart.checkout')}</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={handleClearCart}
+                className="w-full bg-gray-100 text-secondary-900 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+              >
+                {t('cart.clear')}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -151,38 +217,24 @@ export default function Cart() {
         )}
       </button>
 
-      {/* Overlay para móvil */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
+      {/* Modal para móvil usando Portal */}
+      {mounted && isOpen && createPortal(
+        <MobileCartModal />,
+        document.body
       )}
 
-      {/* Carrito */}
-      <div className={`
-        fixed lg:relative inset-y-0 right-0 w-full max-w-md lg:max-w-none lg:w-auto
-        bg-white lg:bg-transparent shadow-xl lg:shadow-none
-        transform lg:transform-none transition-transform duration-300 ease-in-out
-        z-50 lg:z-auto
-        ${isOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}
-      `}>
-        <div className="card h-full lg:h-auto">
+      {/* Carrito para desktop */}
+      <div className="hidden lg:block">
+        <div className="card h-auto flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 lg:border-b-0">
+          <div className="flex items-center justify-between p-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-secondary-900">
               {t('cart.title')}
             </h2>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
 
-          {/* Contenido del carrito */}
-          <div className="flex-1 overflow-y-auto max-h-96 lg:max-h-none">
+          {/* Contenido del carrito desktop */}
+          <div className="flex-1 overflow-y-auto lg:max-h-none">
             {cart.items.length === 0 ? (
               <div className="text-center py-8 px-4">
                 <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
@@ -202,9 +254,9 @@ export default function Cart() {
             )}
           </div>
 
-          {/* Footer */}
+          {/* Footer desktop */}
           {cart.items.length > 0 && (
-            <div className="p-4 border-t border-gray-200 space-y-4">
+            <div className="p-4 border-t border-gray-200 space-y-4 flex-shrink-0 bg-white">
               {/* Total */}
               <div className="flex justify-between items-center">
                 <span className="text-lg font-semibold text-secondary-900">
