@@ -107,6 +107,13 @@ export default function ProductCatalog() {
 
   const handleFiltersChange = (newFilters: ProductFilters) => {
     setFilters(newFilters);
+    
+    // Si se están limpiando los filtros (category='all' y no hay precio), también limpiar búsqueda
+    if (newFilters.category === 'all' && 
+        newFilters.minPrice === undefined && 
+        newFilters.maxPrice === undefined) {
+      setSearchTerm('');
+    }
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

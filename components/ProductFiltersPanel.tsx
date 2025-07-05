@@ -40,6 +40,7 @@ export default function ProductFiltersPanel({
     };
     setLocalFilters(clearedFilters);
     onFiltersChange(clearedFilters);
+    onClose();
   };
 
   return (
