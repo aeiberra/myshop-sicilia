@@ -1,0 +1,42 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["fra1"],
+  "env": {
+    "NOTION_DATABASE_ID": "@notion-database-id",
+    "NOTION_SECRET": "@notion-secret", 
+    "WHATSAPP_NUMBER": "@whatsapp-number"
+  },
+  "build": {
+    "env": {
+      "NOTION_DATABASE_ID": "126051cd81d98062b3e3cb03c7590935",
+      "WHATSAPP_NUMBER": "393481860784"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/es"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+} 

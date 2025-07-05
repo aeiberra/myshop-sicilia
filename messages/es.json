@@ -1,0 +1,83 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "apply": "Aplicar",
+    "price": "Precio",
+    "category": "Categoría",
+    "description": "Descripción",
+    "available": "Disponible",
+    "sold": "Vendido"
+  },
+  "header": {
+    "title": "MyShop Sicilia",
+    "subtitle": "Productos de hogar en venta",
+    "location": "Ragusa, Sicilia",
+    "cart": "Carrito",
+    "language": "Idioma"
+  },
+  "products": {
+    "title": "Productos Disponibles",
+    "searchPlaceholder": "Buscar productos...",
+    "filterByCategory": "Filtrar por categoría",
+    "allCategories": "Todas las categorías",
+    "sortBy": "Ordenar por",
+    "sortOptions": {
+      "name": "Nombre",
+      "price": "Precio",
+      "category": "Categoría",
+      "date": "Fecha"
+    },
+    "noResults": "No se encontraron productos",
+    "noResultsDescription": "Intenta con otros términos de búsqueda o filtros",
+    "priceRange": "Rango de precio",
+    "from": "Desde",
+    "to": "Hasta",
+    "addToCart": "Agregar al carrito",
+    "outOfStock": "Agotado",
+    "productCount": "productos encontrados"
+  },
+  "cart": {
+    "title": "Carrito de Compras",
+    "empty": "Tu carrito está vacío",
+    "emptyDescription": "Agrega productos para comenzar",
+    "item": "artículo",
+    "items": "artículos",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "quantity": "Cantidad",
+    "remove": "Eliminar",
+    "clear": "Vaciar carrito",
+    "checkout": "Enviar Pedido",
+    "whatsappMessage": "¡Hola! Me interesa comprar estos productos:",
+    "continueShopping": "Seguir comprando",
+    "updateQuantity": "Actualizar cantidad"
+  },
+  "categories": {
+    "Tecnología": "Tecnología",
+    "Electrodomésticos": "Electrodomésticos",
+    "Muebles": "Muebles",
+    "Bazar": "Bazar",
+    "Oficina": "Oficina",
+    "Herramientas": "Herramientas",
+    "Varios": "Varios"
+  },
+  "footer": {
+    "contact": "Contacto",
+    "whatsapp": "WhatsApp",
+    "location": "Ragusa, Sicilia",
+    "copyright": "© 2024 MyShop Sicilia. Todos los derechos reservados."
+  },
+  "seo": {
+    "title": "MyShop Sicilia - Productos de hogar en venta",
+    "description": "Encuentra productos de hogar en venta en Ragusa, Sicilia. Tecnología, electrodomésticos, muebles y más. Contacto directo por WhatsApp.",
+    "keywords": "venta, hogar, productos, Ragusa, Sicilia, tecnología, electrodomésticos, muebles"
+  }
+} 

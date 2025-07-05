@@ -1,0 +1,83 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "apply": "Apply",
+    "price": "Price",
+    "category": "Category",
+    "description": "Description",
+    "available": "Available",
+    "sold": "Sold"
+  },
+  "header": {
+    "title": "MyShop Sicilia",
+    "subtitle": "Home products for sale",
+    "location": "Ragusa, Sicily",
+    "cart": "Cart",
+    "language": "Language"
+  },
+  "products": {
+    "title": "Available Products",
+    "searchPlaceholder": "Search products...",
+    "filterByCategory": "Filter by category",
+    "allCategories": "All categories",
+    "sortBy": "Sort by",
+    "sortOptions": {
+      "name": "Name",
+      "price": "Price",
+      "category": "Category",
+      "date": "Date"
+    },
+    "noResults": "No products found",
+    "noResultsDescription": "Try different search terms or filters",
+    "priceRange": "Price range",
+    "from": "From",
+    "to": "To",
+    "addToCart": "Add to cart",
+    "outOfStock": "Out of stock",
+    "productCount": "products found"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Add products to get started",
+    "item": "item",
+    "items": "items",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "clear": "Clear cart",
+    "checkout": "Send Order",
+    "whatsappMessage": "Hello! I'm interested in buying these products:",
+    "continueShopping": "Continue shopping",
+    "updateQuantity": "Update quantity"
+  },
+  "categories": {
+    "Tecnología": "Technology",
+    "Electrodomésticos": "Appliances",
+    "Muebles": "Furniture",
+    "Bazar": "Bazaar",
+    "Oficina": "Office",
+    "Herramientas": "Tools",
+    "Varios": "Miscellaneous"
+  },
+  "footer": {
+    "contact": "Contact",
+    "whatsapp": "WhatsApp",
+    "location": "Ragusa, Sicily",
+    "copyright": "© 2024 MyShop Sicilia. All rights reserved."
+  },
+  "seo": {
+    "title": "MyShop Sicilia - Home products for sale",
+    "description": "Find home products for sale in Ragusa, Sicily. Technology, appliances, furniture and more. Direct contact via WhatsApp.",
+    "keywords": "sale, home, products, Ragusa, Sicily, technology, appliances, furniture"
+  }
+} 

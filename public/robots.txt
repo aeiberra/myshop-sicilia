@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://myshop-sicilia.vercel.app/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Allow important pages
+Allow: /es/
+Allow: /it/
+Allow: /en/ 
