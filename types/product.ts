@@ -60,13 +60,13 @@ export interface WhatsAppMessage {
 }
 
 export const PRODUCT_CATEGORIES = [
-  'Tecnología',
-  'Electrodomésticos', 
-  'Muebles',
-  'Bazar',
-  'Oficina',
-  'Herramientas',
-  'Varios'
+  'Tecnologia 🖥️',
+  'Elettrodomestici 🫕', 
+  'Mobili 🪑',
+  'Bazar 🍽️',
+  'Ufficio 🖨️',
+  'Strumenti 🛠',
+  'Vari 🎁'
 ] as const;
 
 export type ProductCategory = typeof PRODUCT_CATEGORIES[number]; 
