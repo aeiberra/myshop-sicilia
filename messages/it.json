@@ -43,7 +43,11 @@
     "addToCart": "Aggiungi al carrello",
     "outOfStock": "Esaurito",
     "inCart": "Nel carrello",
-    "productCount": "prodotti trovati"
+    "productCount": "prodotti trovati",
+    "description": "Descrizione",
+    "availability": "Disponibilità",
+    "available": "Disponibile",
+    "category": "Categoria"
   },
   "cart": {
     "title": "Carrello della Spesa",

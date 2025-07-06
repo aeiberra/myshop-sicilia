@@ -43,7 +43,11 @@
     "addToCart": "Add to cart",
     "outOfStock": "Out of stock",
     "inCart": "In cart",
-    "productCount": "products found"
+    "productCount": "products found",
+    "description": "Description",
+    "availability": "Availability",
+    "available": "Available",
+    "category": "Category"
   },
   "cart": {
     "title": "Shopping Cart",

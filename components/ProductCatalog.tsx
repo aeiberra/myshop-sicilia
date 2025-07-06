@@ -6,6 +6,7 @@ import { Search, Filter, Grid, List } from 'lucide-react';
 import { Product, ProductFilters, PRODUCT_CATEGORIES } from '@/types/product';
 import ProductCard from './ProductCard';
 import ProductFiltersPanel from './ProductFiltersPanel';
+import ProductModal from './ProductModal';
 
 export default function ProductCatalog() {
   const t = useTranslations();
@@ -20,6 +21,8 @@ export default function ProductCatalog() {
     sortBy: 'name',
     sortOrder: 'asc',
   });
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Cargar productos
   useEffect(() => {
@@ -120,6 +123,16 @@ export default function ProductCatalog() {
     setSearchTerm(e.target.value);
   };
 
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -207,10 +220,18 @@ export default function ProductCatalog() {
               key={product.id}
               product={product}
               viewMode={viewMode}
+              onProductClick={handleProductClick}
             />
           ))}
         </div>
       )}
+
+      {/* Modal de producto */}
+      <ProductModal
+        product={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 } 

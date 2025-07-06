@@ -10,9 +10,10 @@ import { addToCart, isProductInCart } from '@/lib/cart';
 interface ProductCardProps {
   product: Product;
   viewMode: 'grid' | 'list';
+  onProductClick?: (product: Product) => void;
 }
 
-export default function ProductCard({ product, viewMode }: ProductCardProps) {
+export default function ProductCard({ product, viewMode, onProductClick }: ProductCardProps) {
   const t = useTranslations();
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
@@ -116,7 +117,10 @@ export default function ProductCard({ product, viewMode }: ProductCardProps) {
 
   if (viewMode === 'list') {
     return (
-      <div className="card p-3 sm:p-4 hover:shadow-lg transition-shadow duration-300">
+      <div 
+        className="card p-3 sm:p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+        onClick={() => onProductClick?.(product)}
+      >
         <div className="flex space-x-3 sm:space-x-4">
           {/* Imagen - más pequeña en mobile para dar más espacio */}
           <div className="flex-shrink-0 w-16 h-16 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden">
@@ -164,7 +168,10 @@ export default function ProductCard({ product, viewMode }: ProductCardProps) {
               
               {/* Botón más prominente */}
               <button
-                onClick={handleAddToCart}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart();
+                }}
                 disabled={buttonState.disabled}
                 className={`w-full py-2 px-2 rounded-md text-xs font-medium transition-colors ${buttonState.className}`}
               >
@@ -196,7 +203,10 @@ export default function ProductCard({ product, viewMode }: ProductCardProps) {
                     €{product.price.toFixed(2)}
                   </p>
                   <button
-                    onClick={handleAddToCart}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToCart();
+                    }}
                     disabled={buttonState.disabled}
                     className={`mt-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${buttonState.className}`}
                   >
@@ -215,7 +225,10 @@ export default function ProductCard({ product, viewMode }: ProductCardProps) {
   }
 
   return (
-    <div className="card group cursor-pointer hover:shadow-product-hover transition-all duration-300">
+    <div 
+      className="card group cursor-pointer hover:shadow-product-hover transition-all duration-300"
+      onClick={() => onProductClick?.(product)}
+    >
       {/* Imagen */}
       <div className="relative aspect-square bg-gray-100 overflow-hidden">
         {product.image && !imageError ? (
@@ -263,7 +276,10 @@ export default function ProductCard({ product, viewMode }: ProductCardProps) {
         </p>
         
         <button
-          onClick={handleAddToCart}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddToCart();
+          }}
           disabled={buttonState.disabled}
           className={`w-full py-3 px-4 rounded-lg text-sm font-medium transition-colors ${buttonState.className}`}
         >

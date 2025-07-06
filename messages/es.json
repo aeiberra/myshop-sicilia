@@ -43,7 +43,11 @@
     "addToCart": "Agregar al carrito",
     "outOfStock": "Agotado",
     "inCart": "En el carrito",
-    "productCount": "productos encontrados"
+    "productCount": "productos encontrados",
+    "description": "Descripción",
+    "availability": "Disponibilidad",
+    "available": "Disponible",
+    "category": "Categoría"
   },
   "cart": {
     "title": "Carrito de Compras",
