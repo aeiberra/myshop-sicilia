@@ -3,11 +3,6 @@
   "outputDirectory": ".next",
   "framework": "nextjs",
   "regions": ["fra1"],
-  "env": {
-    "NOTION_DATABASE_ID": "@notion-database-id",
-    "NOTION_SECRET": "@notion-secret", 
-    "WHATSAPP_NUMBER": "@whatsapp-number"
-  },
   "build": {
     "env": {
       "NOTION_DATABASE_ID": "126051cd81d98062b3e3cb03c7590935",
