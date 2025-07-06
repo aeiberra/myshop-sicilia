@@ -2,6 +2,7 @@ import '../globals.css';
 import { Inter } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -69,6 +70,9 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  // Enable static rendering
+  setRequestLocale(locale);
+  
   const messages = await getMessages();
 
   return (

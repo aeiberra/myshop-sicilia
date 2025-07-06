@@ -14,6 +14,9 @@ const nextConfig = {
     ],
     unoptimized: true
   },
+  env: {
+    _next_intl_trailing_slash: 'false'
+  },
 }
 
 module.exports = withNextIntl(nextConfig) 

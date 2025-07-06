@@ -1,12 +1,16 @@
 import { Suspense } from 'react';
 import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 import Header from '@/components/Header';
 import ProductCatalog from '@/components/ProductCatalog';
 import Cart from '@/components/Cart';
 import Footer from '@/components/Footer';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
-export default function HomePage() {
+export default function HomePage({ params: { locale } }: { params: { locale: string } }) {
+  // Enable static rendering
+  setRequestLocale(locale);
+  
   const t = useTranslations();
 
   return (
