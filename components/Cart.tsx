@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { ShoppingCart, Trash2, Send, X } from 'lucide-react';
 import { Cart as CartType, CartItem } from '@/types/product';
 import { getCart, removeFromCart, clearCart, generateWhatsAppUrl } from '@/lib/cart';
@@ -77,11 +76,9 @@ export default function Cart() {
       {/* Imagen */}
       <div className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
         {item.product.image ? (
-          <Image
+          <img
             src={item.product.image}
             alt={item.product.name}
-            width={64}
-            height={64}
             className="w-full h-full object-cover"
           />
         ) : (

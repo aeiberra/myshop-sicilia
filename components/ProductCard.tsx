@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { ShoppingCart, Eye, Check } from 'lucide-react';
 import { Product } from '@/types/product';
 import { addToCart, isProductInCart } from '@/lib/cart';
@@ -64,10 +63,13 @@ export default function ProductCard({ product, viewMode, onProductClick }: Produ
   };
 
   const handleImageLoad = () => {
+    console.log('✅ Image loaded successfully:', product.image);
     setIsImageLoading(false);
   };
 
-  const handleImageError = () => {
+  const handleImageError = (e: any) => {
+    console.error('❌ Image failed to load:', product.image);
+    console.error('Error event:', e);
     setIsImageLoading(false);
     setImageError(true);
   };
@@ -125,11 +127,9 @@ export default function ProductCard({ product, viewMode, onProductClick }: Produ
           {/* Imagen - más pequeña en mobile para dar más espacio */}
           <div className="flex-shrink-0 w-16 h-16 sm:w-24 sm:h-24 bg-gray-100 rounded-lg overflow-hidden">
             {product.image && !imageError ? (
-              <Image
+              <img
                 src={product.image}
                 alt={product.name}
-                width={96}
-                height={96}
                 className="w-full h-full object-cover"
                 onLoad={handleImageLoad}
                 onError={handleImageError}
@@ -232,11 +232,10 @@ export default function ProductCard({ product, viewMode, onProductClick }: Produ
       {/* Imagen */}
       <div className="relative aspect-square bg-gray-100 overflow-hidden">
         {product.image && !imageError ? (
-          <Image
+          <img
             src={product.image}
             alt={product.name}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             onLoad={handleImageLoad}
             onError={handleImageError}
           />

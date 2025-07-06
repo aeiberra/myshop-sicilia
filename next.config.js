@@ -12,11 +12,8 @@ const nextConfig = {
       'prod-files-secure.s3.us-west-2.amazonaws.com',
       's3.us-west-2.amazonaws.com'
     ],
-    unoptimized: true
-  },
-  env: {
-    _next_intl_trailing_slash: 'false'
-  },
+    unoptimized: false
+  }
 }
 
 module.exports = withNextIntl(nextConfig) 

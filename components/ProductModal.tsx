@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { X, ShoppingCart, Check, Eye } from 'lucide-react';
 import { Product } from '@/types/product';
 import { addToCart, isProductInCart } from '@/lib/cart';
@@ -177,11 +176,9 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                         <div className="w-8 h-8 border-2 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
                       </div>
                     )}
-                    <Image
+                    <img
                       src={product.image}
                       alt={product.name}
-                      width={400}
-                      height={400}
                       className="w-full h-full object-cover"
                       onLoad={handleImageLoad}
                       onError={handleImageError}

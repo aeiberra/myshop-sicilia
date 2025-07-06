@@ -1,5 +1,7 @@
 import { Client } from '@notionhq/client';
 import { Product, NotionResponse, NotionPage } from '@/types/product';
+import fs from 'fs';
+import path from 'path';
 
 // Inicializar cliente de Notion
 const notion = new Client({
@@ -7,6 +9,23 @@ const notion = new Client({
 });
 
 const DATABASE_ID = process.env.NOTION_DATABASE_ID || '126051cd81d98062b3e3cb03c7590935';
+
+// Cargar mapeo de imágenes locales
+let imageMapping: Record<string, string> = {};
+
+// Función para cargar el mapeo de imágenes
+function loadImageMapping() {
+  if (Object.keys(imageMapping).length === 0) {
+    try {
+      const mappingPath = path.join(process.cwd(), 'lib', 'image-mapping.json');
+      const mappingData = fs.readFileSync(mappingPath, 'utf8');
+      imageMapping = JSON.parse(mappingData);
+    } catch (error) {
+      console.warn('No se pudo cargar el mapeo de imágenes locales:', error);
+    }
+  }
+  return imageMapping;
+}
 
 // Función para obtener valor de texto de una propiedad de Notion
 function getTextFromProperty(property: any): string {
@@ -39,9 +58,17 @@ function getNumberFromProperty(property: any): number {
 }
 
 // Función para obtener URL de imagen de una propiedad de Notion
-function getImageFromProperty(property: any): string {
+function getImageFromProperty(property: any, pageId: string): string {
   if (!property) return '';
   
+  // Primero intentar usar imagen local si existe
+  const mapping = loadImageMapping();
+  const localImage = mapping[pageId];
+  if (localImage) {
+    return localImage;
+  }
+  
+  // Si no hay imagen local, usar la URL remota como fallback
   if (property.type === 'files' && property.files?.[0]) {
     const file = property.files[0];
     if (file.type === 'external') {
@@ -96,7 +123,7 @@ function convertNotionPageToProduct(page: NotionPage): Product {
     price: getNumberFromProperty(properties.Prezzo || properties.Precio || properties.Price),
     description: getTextFromProperty(properties.Descrizione || properties.Descripción || properties.Description),
     category: getTextFromProperty(properties.Categorie || properties.Categoría || properties.Category),
-    image: getImageFromProperty(properties.Foto || properties.Image || properties.foto),
+    image: getImageFromProperty(properties.Foto || properties.Image || properties.foto, page.id),
     available: getStatusFromProperty(properties.Status || properties.Disponible || properties.Available),
     createdAt: page.created_time,
     updatedAt: page.last_edited_time,
