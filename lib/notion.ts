@@ -63,8 +63,10 @@ function getImageFromProperty(property: any, pageId: string): string {
   
   // Primero intentar usar imagen local si existe
   const mapping = loadImageMapping();
-  const localImage = mapping[pageId];
+  let localImage = mapping[pageId];
   if (localImage) {
+    // Cambiar la extensión a .webp
+    localImage = localImage.replace(/\.(jpg|jpeg|png)$/, '.webp');
     return localImage;
   }
   
